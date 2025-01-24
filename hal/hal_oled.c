@@ -13,3 +13,7 @@ void hal_display_write(uint8_t *data, uint8_t page, uint8_t col, uint8_t width, 
 void hal_display_fill(uint8_t data) {
   display_fill(data);
 }
+
+void hal_display_write_bitmap(uint8_t *bitmap_data) {
+  display_write_bitmap(bitmap_data);
+}

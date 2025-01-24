@@ -31,10 +31,9 @@ void i2c_init();
 void i2c_write(uint8_t address, uint8_t *data, uint8_t len);
 void ssd1306_command(uint8_t command);
 void oled_init();
-
+void display_write_bitmap(uint8_t *bitmap_data);
 
 /* Main init and write functions */
-
 void display_write(uint8_t *data, uint8_t page, uint8_t col, uint8_t width, uint8_t height);
 void display_fill(uint8_t data);
 void display_init();

@@ -183,24 +183,21 @@ void oled_init() {
 /* Main driver functions */
 
 /* Write data to screen */
-
 void display_write(uint8_t *data, uint8_t page, uint8_t col, uint8_t width, uint8_t height) {
   ssd1306_command(0xB0 + page);
   ssd1306_command(0x00 | (col & 0x0F));
   ssd1306_command(0x10 | (col << 4));
 
-  for(uint8_t i = 0; i < height; i++) {
-    for(uint8_t j = 0; j < width; j++) {
+  for(uint8_t i = 0; i < width; i++) {
+    for(uint8_t j = 0; j < height; j++) {
 
       /* Control byte followed by data byte */
-      uint8_t data_packet[2] = {0x40, (uint8_t)data[i * width + j]};
+      uint8_t data_packet[2] = {0x40, (uint8_t)data[i * height + j]};
       i2c_write(0x3D, data_packet, 2);
       delay_loop(10);
     }
   }
 }
-
-
 
 /* Fill the entire screen with a specific pattern */
 void display_fill(uint8_t pattern) {
@@ -210,6 +207,12 @@ void display_fill(uint8_t pattern) {
   for(uint8_t page = 0; page < 8; page++) {
     display_write(buffer, page, 0, 128, 1);
   }
+}
+
+/* Write any 128x64 bitmap xmb data */
+void display_write_bitmap(uint8_t *bitmap_data) {
+  /* Call display_write with hardcoded values */
+  display_write(bitmap_data, 0, 0, 128, 8);
 }
 
 void display_init() {
