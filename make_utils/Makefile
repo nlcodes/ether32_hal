@@ -13,6 +13,8 @@ SRCS = main.c \
        startup.s \
        stm32_hal/hal/hal_oled.c \
        stm32_hal/drivers/adafruit_stemma_qt_ssd1306/oled.c \
+       stm32_hal/hal/hal_buttons.c \
+       stm32_hal/drivers/4x4_button_matrix/buttons.c \
        stm32_hal/hal/hal_status_led.c \
        stm32_hal/drivers/led/led_on_off/led_on_off.c \
        stm32_hal/drivers/led/led_blink/led_blink.c \
