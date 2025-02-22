@@ -1,5 +1,4 @@
 #include "oled.h"
-#include <stdint.h>
 #include <string.h>
 
 /* Delay function */

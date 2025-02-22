@@ -1,18 +1,10 @@
 #ifndef OLED_H
 #define OLED_H
 
-#include <stdint.h>
-#include <stddef.h>
+#include "../globals.h"
 
 /* Key register */
 #define I2C1_BASE 0x40005400
-#define RCC_BASE 0x40023800
-#define GPIOB_BASE 0x40020400
-
-/* RCC registers for enabling peripherals */
-
-/* GPIO */
-#define RCC_AHB1ENR (*(volatile uint32_t *)(RCC_BASE + 0x30))
 
 /* I2C */
 #define RCC_APB1ENR (*(volatile uint32_t *)(RCC_BASE + 0x40)) 
