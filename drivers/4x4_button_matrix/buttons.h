@@ -16,6 +16,6 @@
 
 void gpio_init();
 
-void read_write_buttons(int *matrix_buttons);
+void read_write_buttons(volatile uint8_t *matrix_buttons);
 
 #endif

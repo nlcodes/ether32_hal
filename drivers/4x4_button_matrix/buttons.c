@@ -1,10 +1,18 @@
 #include "buttons.h"
+#include "../interrupts.h"
+#include "../../hal/hal.h"
 
 void gpio_init() {
 
   /* Enable GPIOB clock */
   RCC_AHB1ENR |= (1 << 1);
-  for(volatile int i = 0; i < 10000; i++);
+
+  ir_delay_done = 0;  
+ 
+  /* Interrupt handles timing */
+  buttons_timer_init();
+
+  while(!ir_delay_done);
 
   /* Set PB4-7 as inputs with pull-up (rows) */
   /* Clear mode bits */
@@ -21,16 +29,18 @@ void gpio_init() {
   GPIOB_MODER &= ~(0xFF);
 
   /* Set to output mode */
-  GPIOB_MODER |= 0x55; 
+  GPIOB_MODER |= 0x55;
 }
 
-void read_write_buttons(int *matrix_buttons) {
+void read_write_buttons(volatile uint8_t *matrix_buttons) {
 
   /* Columns */
   for(int i = 0; i < 4; i++) {
     GPIOB_ODR = ~(1 << i);  
 
-    for(volatile uint8_t delay = 0; delay < 100; delay++);
+    /* Wait for timer interrupt signal after setting ODR */
+    ir_delay_done = 0;
+    while(!ir_delay_done);
 
     uint32_t rows = GPIOB_IDR;
 

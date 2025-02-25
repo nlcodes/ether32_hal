@@ -6,9 +6,6 @@
 /* Key register */
 #define I2C1_BASE 0x40005400
 
-/* I2C */
-#define RCC_APB1ENR (*(volatile uint32_t *)(RCC_BASE + 0x40)) 
-
 /* I2C1 peripheral registers */
 #define I2C1_CR1 (*(volatile uint32_t *)(I2C1_BASE + 0x00))
 #define I2C1_CR2 (*(volatile uint32_t *)(I2C1_BASE + 0x04))

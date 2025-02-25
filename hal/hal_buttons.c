@@ -11,6 +11,6 @@ void hal_gpio_init() {
 /* Reads and writes button matrix
  * Stores button state in passed array as being pressed(1) or released(0)
  */
-void hal_read_write_buttons(int *matrix_buttons) {
+void hal_read_write_buttons(volatile uint8_t *matrix_buttons) {
   read_write_buttons(matrix_buttons);
 }

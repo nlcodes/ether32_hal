@@ -11,6 +11,7 @@ LDFLAGS = -Tlink.ld -nostartfiles
 # Source files
 SRCS = main.c \
        startup.s \
+       stm32_hal/drivers/interrupts.c \
        stm32_hal/hal/hal_oled.c \
        stm32_hal/drivers/adafruit_stemma_qt_ssd1306/oled.c \
        stm32_hal/hal/hal_buttons.c \
