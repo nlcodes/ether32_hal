@@ -1,0 +1,21 @@
+make_utils
+
+About:
+  Make/build utilities for stm32_hal library and supported peripherals
+  Desinged to provide a toolchain for building c projects on linux
+  Includes a startup, linker, and Makefile
+  Uses scheme lisp for a build script to automate the build process
+
+Dependancies:
+  Dependancies for the make.scm script include gambit scheme,
+  gnu make, gcc arm toolchain, and st-link utilities
+
+Instructions:
+  As specified in hal master directory readme, move all files into
+  working project master directory
+  After installing dependancies run "gsi make.scm" while using
+  supported peripherals, and it will build the program (test.bin)
+  The script will also automatically flash the .bin to the mcu via swd
+  If you would like to build without flashing,
+  duplicate the script and remove the command at line 9
+  Ensure the script has proper permissions to run
