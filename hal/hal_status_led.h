@@ -4,7 +4,6 @@
 #include <stdint.h>
 
 void hal_led_on_off(volatile uint8_t running);
-
 void hal_led_blink();
 
 #endif
