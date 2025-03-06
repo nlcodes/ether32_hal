@@ -21,4 +21,10 @@ Instructions:
   Path should be "stm32_hal/hal/hal.h"
   For more documentation regarding specific hal functions, their purpose, and how to 
   implement them in an stm32 firmware project read readme.txt 
+  Reading of this documentation is essential to understand
+  how to use the hal, and goes into great detail on the specifics 
+  of how to go about implementing it in your programs 
+  This document covers essential initialization steps as well as 
+  how to use the hal functions to manipulate your mcu and peripherals 
+  from a higher level of abstraction
   located at "stm32_hal/hal/readme.txt"

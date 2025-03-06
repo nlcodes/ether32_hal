@@ -11,6 +11,58 @@ Instructions:
 
 HAL Function Instructions and Explainations:
 
+NOTE:
+  It is very important to initialize interrupts first
+  then initialize all peripherals after, and initialize 
+  each according to the instructions below 
+  Some functions may require defining variables in your
+  program while using the hal and passing those variables to 
+  the function 
+  This includes the hal_timer_interrupt_init function 
+  After initializing interrupts and then peripherals,
+  you may begin calling other functions in your program 
+  related to both to manipulate as needed
+  Please read the docs carefully
+
+Interrupts:
+  Functions pertaining to interrupts implementation in hal library
+  as well as how to use them in your program
+
+  Init function for timer interrupt
+  Takes argument for delay time in ms
+  Called once per program when using hal
+  This initializes the timer interrupt for re use 
+  You can then use other hal functions below to
+  check if the delay is done,
+  reset the timer, and change the delay timing
+  Timer interrupts must be initialized before any
+  peripherals are initialized as stated above
+  They are essential to the init code of other peripherals
+    void hal_timer_interrupt_init(uint16_t delay_ms);
+
+  Checks to see if delay is done
+  Function returns 1 if delay is done and 0 if not
+    uint8_t hal_timer_interrupt_check();
+
+  Resets interrupt timer 
+  State returned during timer check now == 0
+    void hal_timer_interrupt_reset();
+
+  Change delay timing initially set with hal_timer_interrupt_init()
+  Takes argument for delay time in ms
+    void hal_timer_interrupt_change_delay(uint16_t delay_ms);
+
+  EXAMPLE USAGE:
+    An example how one might use a timer interrupt delay in code 
+    using these functions would be to make sure interrupts are initialized
+    call the reset function (if used already), 
+    Set a delay time you would like to use,
+    and then use an empty body while loop for instance to check if 
+    delay is over using check delay function 
+    When the delay is over program continues 
+    Timer should then be reset before next time set and check loop
+    Init only needs to happen once at beginning of program
+
 OLED:
   Functions which cover initialization and writing data to
   128x64 ssd1306 oled using i2c protocol
