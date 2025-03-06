@@ -7,12 +7,12 @@ void gpio_init() {
   /* Enable GPIOB clock */
   RCC_AHB1ENR |= (1 << 1);
 
-  ir_delay_done = 0;  
- 
-  /* Interrupt handles timing */
-  buttons_timer_init();
+  /* Set interrupt to a delay of 20 ms*/
+  timer_interrupt_change_delay(20);
 
-  while(!ir_delay_done);
+  /* Interrupt handles timing */
+  timer_interrupt_reset();  
+  while(!timer_interrupt_check());
 
   /* Set PB4-7 as inputs with pull-up (rows) */
   /* Clear mode bits */
@@ -39,8 +39,8 @@ void read_write_buttons(volatile uint8_t *matrix_buttons) {
     GPIOB_ODR = ~(1 << i);  
 
     /* Wait for timer interrupt signal after setting ODR */
-    ir_delay_done = 0;
-    while(!ir_delay_done);
+    timer_interrupt_reset();
+    while(!timer_interrupt_check());
 
     uint32_t rows = GPIOB_IDR;
 

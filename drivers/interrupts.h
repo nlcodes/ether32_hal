@@ -3,6 +3,11 @@
 
 #include "globals.h"
 
+/* Interrupt usage functions for implementation
+ * in drivers found at bottom of file
+ */
+
+
 /* Base memory addresses for interrupt control registers */
 
 /* System config controller */
@@ -64,18 +69,11 @@
 /* Timer two number */
 #define TIM2_IRQn 28
 
-
-/* Function for timer interrupt for button matrix */
-void buttons_timer_init();
-
 /* General delay interrupt function
  * TIM2_IRQHandler() defined in interrupts.c
  * Automatically called by hardware 
  * Does not need header file declaration
  */
-
-/* Delay done signal for timer interrupt */
-extern volatile uint8_t ir_delay_done;
 
 #define PRIMASK (*((volatile uint32_t *)0xE000ED10))
 
@@ -86,5 +84,20 @@ static inline void __disable_irq() {
 static inline void __enable_irq() {
   PRIMASK = 0;
 }
+
+/* Delay done signal for timer interrupt */
+extern volatile uint8_t ir_delay_done;
+
+/* Init function for timer interrupt */
+void timer_interrupt_init(uint16_t delay_ms);
+
+/* Checks to see if delay is done */
+uint8_t timer_interrupt_check();
+
+/* Resets the interrupt timer */
+void timer_interrupt_reset();
+
+/* Change delay timing initially set with timer_interrupt_init() */
+void timer_interrupt_change_delay(uint16_t delay_ms);
 
 #endif

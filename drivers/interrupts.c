@@ -10,7 +10,7 @@ void TIM2_IRQHandler(void) {
   }
 }
 
-void buttons_timer_init() {
+void timer_interrupt_init(uint16_t delay_ms) {
   __disable_irq();
 
   /* Enable timer 2 clock */
@@ -18,7 +18,7 @@ void buttons_timer_init() {
 
   /* Config timer */
   TIM2_PSC = 16000-1;
-  TIM2_ARR = 20-1;
+  TIM2_ARR = delay_ms-1;
 
   /* Set interrupt priority before enabling */
   NVIC_SetPriority(TIM2_IRQn, 2);
@@ -38,4 +38,15 @@ void buttons_timer_init() {
   __enable_irq();
 }
 
+uint8_t timer_interrupt_check() {
+  return ir_delay_done;
+}
 
+void timer_interrupt_reset() {
+  ir_delay_done = 0;
+}
+
+void timer_interrupt_change_delay(uint16_t delay_ms) {
+  TIM2_ARR = delay_ms -1;
+  TIM2_EGR |= 0x1;
+}
