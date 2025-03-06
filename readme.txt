@@ -12,11 +12,13 @@ About:
   to work with similar mcu/peripherals possibly with some minor adjustments required
 
 Instructions:
-  Place in master directory of mcu project
-  Move the contents of make_utils directory into master directory
+  Place stm32_hal directory in master directory of stm32 firmware project using the hal
+  Move the contents of make_utils directory inside stm32_hal into project master directory
+  The contents of make_utils are build tools for stm32_hal c code compilation on linux
   For more documentation on the contents of make_utils read readme.txt
   located at "stm32_hal/make_utils/readme.txt"
   Include the path of the main hal file (hal.h) in program to access all hal functions
   Path should be "stm32_hal/hal/hal.h"
-  For more documentation regarding specific hal functions and their purpose,
-  read readme.txt located at "stm32_hal/hal/readme.txt"
+  For more documentation regarding specific hal functions, their purpose, and how to 
+  implement them in an stm32 firmware project read readme.txt 
+  located at "stm32_hal/hal/readme.txt"
