@@ -13,9 +13,15 @@ Dependancies:
 Instructions:
   As specified in hal master directory readme, move all files into
   working project master directory
+  Program should be called "main.c"
   After installing dependancies run "gsi make.scm" while using
   supported peripherals, and it will build the program (test.bin)
   The script will also automatically flash the .bin to the mcu via swd
   If you would like to build without flashing,
   duplicate the script and remove the command at line 9
   Ensure the script has proper permissions to run
+
+NOTE:
+  You may need to edit the make utilities to match your exact setup 
+  The utilities provide an outline for an easy build and what has 
+  worked with the tested mcu and peripherals 
