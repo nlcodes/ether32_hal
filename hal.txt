@@ -15,10 +15,6 @@ NOTE:
   It is very important to initialize interrupts first
   then initialize all peripherals after, and initialize 
   each according to the instructions below 
-  Some functions may require defining variables in your
-  program while using the hal and passing those variables to 
-  the function 
-  This includes the hal_timer_interrupt_init function 
   After initializing interrupts and then peripherals,
   you may begin calling other functions in your program 
   related to both to manipulate as needed
@@ -29,8 +25,9 @@ Interrupts:
   as well as how to use them in your program
 
   Init function for timer interrupt
-  Takes argument for delay time in ms
-  Called once per program when using hal
+  Must be called first before calling any other hal functions 
+  Takes argument for delay time in ns
+  Function is called once per program when using hal
   This initializes the timer interrupt for re use 
   You can then use other hal functions below to
   check if the delay is done,
@@ -38,7 +35,18 @@ Interrupts:
   Timer interrupts must be initialized before any
   peripherals are initialized as stated above
   They are essential to the init code of other peripherals
-    void hal_timer_interrupt_init(uint16_t delay_ns);
+
+  The argument delay_ns just sets the default ARR interrupt delay time
+  This is automatically changed by any peripheral init functions 
+  for the delay needed using interrupt timers in the driver code 
+  that initializes those particular peripherals 
+  So, it does not matter much what this value is, as it will 
+  likely be reset upon the init of any peripheral 
+  It was included as an argument so one can use timer interrupts 
+  in a program without calling the change delay function if the 
+  program being written does not contain peripherals, and only needs 
+  one delay time 
+    void hal_timer_interrupt_init(uint32_t delay_ns);
 
   Checks to see if delay is done
   Function returns 1 if delay is done and 0 if not
@@ -50,19 +58,17 @@ Interrupts:
 
   Change delay timing initially set with hal_timer_interrupt_init()
   Takes argument for delay time in ns
-    void hal_timer_interrupt_change_delay(uint16_t delay_ns);
+    void hal_timer_interrupt_change_delay(uint32_t delay_ns);
 
   EXAMPLE USAGE:
     An example how one might use a timer interrupt delay in code 
     using these functions would be to make sure 
-    interrupts are initialized
-    call the reset function (if used already), 
-    Set a delay time you would like to use,
-    and then use an empty body while loop for instance to check if 
+    interrupts are initialized, 
+    set a delay time you would like to use, reset the timer,
+    and then use a while loop for instance to check if 
     delay is over using check delay function 
     When the delay is over program continues 
-    Timer should then be reset before next time set and check loop
-    Init only needs to happen once at beginning of program
+    Continue with this pattern as needed
 
 OLED:
   Functions which cover initialization and writing data to
