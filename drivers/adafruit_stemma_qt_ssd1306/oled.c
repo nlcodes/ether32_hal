@@ -6,6 +6,10 @@
  * Lower values may be not be effective
  */
 
+void delay(uint32_t cycles) {
+  for(int i = 0; i < cycles; i++);
+}
+
 /* Init I2C */
 void i2c_init() {
 
@@ -228,7 +232,7 @@ void display_write_bitmap(uint8_t *bitmap_data) {
 void display_init() {
 
   /* Delay to allow reliable startup */
-  timer_interrupt_change_delay(62500000);
+  timer_interrupt_change_delay(500000000);
   timer_interrupt_reset();
   while(!timer_interrupt_check());
 
