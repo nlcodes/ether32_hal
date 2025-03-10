@@ -6,10 +6,6 @@
  * Lower values may be not be effective
  */
 
-void delay(uint32_t cycles) {
-  for(int i = 0; i < cycles; i++);
-}
-
 /* Init I2C */
 void i2c_init() {
 
@@ -21,7 +17,7 @@ void i2c_init() {
   /* Enable I2C1 */
   RCC_APB1ENR |= (1 << 21); 
   
-  timer_interrupt_change_delay(62500);
+  timer_interrupt_change_delay(6250000);
   timer_interrupt_reset();
   while(!timer_interrupt_check());
 
