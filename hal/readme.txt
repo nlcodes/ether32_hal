@@ -38,7 +38,7 @@ Interrupts:
   Timer interrupts must be initialized before any
   peripherals are initialized as stated above
   They are essential to the init code of other peripherals
-    void hal_timer_interrupt_init(uint16_t delay_ms);
+    void hal_timer_interrupt_init(uint16_t delay_ns);
 
   Checks to see if delay is done
   Function returns 1 if delay is done and 0 if not
@@ -49,12 +49,13 @@ Interrupts:
     void hal_timer_interrupt_reset();
 
   Change delay timing initially set with hal_timer_interrupt_init()
-  Takes argument for delay time in ms
-    void hal_timer_interrupt_change_delay(uint16_t delay_ms);
+  Takes argument for delay time in ns
+    void hal_timer_interrupt_change_delay(uint16_t delay_ns);
 
   EXAMPLE USAGE:
     An example how one might use a timer interrupt delay in code 
-    using these functions would be to make sure interrupts are initialized
+    using these functions would be to make sure 
+    interrupts are initialized
     call the reset function (if used already), 
     Set a delay time you would like to use,
     and then use an empty body while loop for instance to check if 
@@ -115,4 +116,3 @@ Test Led:
 
   Indefinitely blinks test led
     void hal_led_blink();
-
