@@ -15,7 +15,6 @@
 #define I2C1_CCR (*(volatile uint32_t *)(I2C1_BASE + 0x1C))
 #define I2C1_TRISE (*(volatile uint32_t *)(I2C1_BASE + 0x20))
 
-void delay_loop(volatile uint32_t cycles);
 void i2c_init();
 void i2c_write(uint8_t address, uint8_t *data, uint8_t len);
 void ssd1306_command(uint8_t command);

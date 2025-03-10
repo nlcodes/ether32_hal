@@ -1,10 +1,10 @@
 #include "oled.h"
+#include "../interrupts.h"
 #include <string.h>
 
-/* Delay function */
-void delay_loop(volatile uint32_t cycles) {
-  for(volatile uint32_t i = 0; i < cycles; i++);
-}
+/* Minimum reliable timer delay on tested mcu is 4250ns 
+ * Lower values may be not be effective
+ */
 
 /* Init I2C */
 void i2c_init() {
@@ -16,8 +16,10 @@ void i2c_init() {
   
   /* Enable I2C1 */
   RCC_APB1ENR |= (1 << 21); 
-
-  delay_loop(1000); 
+  
+  timer_interrupt_change_delay(62500);
+  timer_interrupt_reset();
+  while(!timer_interrupt_check());
 
   /* GPIO config; set pins to alternate function mode */
   *(volatile uint32_t *)(GPIOB_BASE + 0x00) |= (2 << 12) | (2 << 14);
@@ -46,7 +48,7 @@ void i2c_init() {
 
 /* I2C write function for STM32 */
 void i2c_write(uint8_t address, uint8_t *data, uint8_t len) {
-  
+
   /* Wait for bus free */
   while (I2C1_SR2 & (1 << 1));  
 
@@ -74,7 +76,10 @@ void i2c_write(uint8_t address, uint8_t *data, uint8_t len) {
     /* Wait for TxE (Transmit Buffer Empty) */
     while(!(I2C1_SR1 & (1 << 7)));  
     I2C1_DR = data[i];
-    delay_loop(10);
+
+    timer_interrupt_change_delay(4250);
+    timer_interrupt_reset();
+    while(!timer_interrupt_check());
   }
 
   /* Wait for BTF (Byte Transfer Finished) */
@@ -93,7 +98,10 @@ void ssd1306_command(uint8_t command) {
   /* Control byte followed by command byte */
   uint8_t data[2] = {0x00, command};  
   i2c_write(0x3D, data, 2);
-  delay_loop(100);
+
+  timer_interrupt_change_delay(6250);
+  timer_interrupt_reset();
+  while(!timer_interrupt_check());
 }
 
 void oled_init() {
@@ -187,13 +195,16 @@ void display_write(uint8_t *data, uint8_t page, uint8_t col, uint8_t width, uint
   ssd1306_command(0x00 | (col & 0x0F));
   ssd1306_command(0x10 | (col << 4));
 
-  for(uint8_t i = 0; i < width; i++) {
+    for(uint8_t i = 0; i < width; i++) {
     for(uint8_t j = 0; j < height; j++) {
 
       /* Control byte followed by data byte */
       uint8_t data_packet[2] = {0x40, (uint8_t)data[i * height + j]};
       i2c_write(0x3D, data_packet, 2);
-      delay_loop(10);
+
+      timer_interrupt_change_delay(4250);
+      timer_interrupt_reset();
+      while(!timer_interrupt_check());
     }
   }
 }
@@ -217,7 +228,9 @@ void display_write_bitmap(uint8_t *bitmap_data) {
 void display_init() {
 
   /* Delay to allow reliable startup */
-  delay_loop(1000000);
+  timer_interrupt_change_delay(62500000);
+  timer_interrupt_reset();
+  while(!timer_interrupt_check());
 
   i2c_init();
 

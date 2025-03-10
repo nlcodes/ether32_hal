@@ -10,15 +10,17 @@ void TIM2_IRQHandler(void) {
   }
 }
 
-void timer_interrupt_init(uint16_t delay_ms) {
+void timer_interrupt_init(uint32_t delay_ns) {
   __disable_irq();
 
   /* Enable timer 2 clock */
   RCC_APB1ENR |= (1 << 0);
 
   /* Config timer */
-  TIM2_PSC = 16000-1;
-  TIM2_ARR = delay_ms-1;
+  TIM2_PSC = 2 - 1;
+
+  /* Converts nanoseconds to ticks */
+  TIM2_ARR = (delay_ns / 125) - 1;
 
   /* Set interrupt priority before enabling */
   NVIC_SetPriority(TIM2_IRQn, 2);
@@ -44,9 +46,11 @@ uint8_t timer_interrupt_check() {
 
 void timer_interrupt_reset() {
   ir_delay_done = 0;
+  TIM2_CNT = 0;
 }
 
-void timer_interrupt_change_delay(uint16_t delay_ms) {
-  TIM2_ARR = delay_ms -1;
+void timer_interrupt_change_delay(uint32_t delay_ns) {
+  TIM2_ARR = (delay_ns / 125) - 1;
+  TIM2_CNT = 0;
   TIM2_EGR |= 0x1;
 }

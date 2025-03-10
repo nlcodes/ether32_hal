@@ -36,8 +36,11 @@
 /* DMA interrupt enable register */
 #define TIM2_DIER (*(volatile uint32_t *)(TIM2_BASE + 0x0C))
 
-/* Event Generation Register*/
+/* Event generation Register*/
 #define TIM2_EGR (*(volatile uint32_t *)(TIM2_BASE + 0x14))
+
+/* Timer count register */
+#define TIM2_CNT (*(volatile uint32_t *)(TIM2_BASE + 0x24)) 
 
 
 /* Timer control bits */
@@ -66,8 +69,9 @@
 
 /* Interrupt number; tells NVIC which interrupt is which */
 
-/* Timer two number */
+/* Timer two */
 #define TIM2_IRQn 28
+
 
 /* General delay interrupt function
  * TIM2_IRQHandler() defined in interrupts.c
@@ -75,6 +79,8 @@
  * Does not need header file declaration
  */
 
+
+/* Init */
 #define PRIMASK (*((volatile uint32_t *)0xE000ED10))
 
 static inline void __disable_irq() {
@@ -85,11 +91,14 @@ static inline void __enable_irq() {
   PRIMASK = 0;
 }
 
+
+/* Interrupt functions etc */
+
 /* Delay done signal for timer interrupt */
 extern volatile uint8_t ir_delay_done;
 
 /* Init function for timer interrupt */
-void timer_interrupt_init(uint16_t delay_ms);
+void timer_interrupt_init(uint32_t delay_ns);
 
 /* Checks to see if delay is done */
 uint8_t timer_interrupt_check();
@@ -98,6 +107,6 @@ uint8_t timer_interrupt_check();
 void timer_interrupt_reset();
 
 /* Change delay timing initially set with timer_interrupt_init() */
-void timer_interrupt_change_delay(uint16_t delay_ms);
+void timer_interrupt_change_delay(uint32_t delay_ns);
 
 #endif

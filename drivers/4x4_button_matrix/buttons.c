@@ -1,14 +1,13 @@
 #include "buttons.h"
 #include "../interrupts.h"
-#include "../../hal/hal.h"
 
 void gpio_init() {
 
   /* Enable GPIOB clock */
   RCC_AHB1ENR |= (1 << 1);
 
-  /* Set interrupt to a delay of 20 ms*/
-  timer_interrupt_change_delay(20);
+  /* Set interrupt delay*/
+  timer_interrupt_change_delay(6250);
 
   /* Interrupt handles timing */
   timer_interrupt_reset();  

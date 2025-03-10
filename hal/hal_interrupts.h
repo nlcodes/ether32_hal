@@ -4,7 +4,6 @@
 #include <stdint.h>
 
 /* Init function for timer interrupt
- * Takes argument for delay time in ms
  * Called once per program when using stm32_hal
  * This initializes the timer interrupt for re use 
  * You can then use other hal functions below to
@@ -13,7 +12,7 @@
  * Timer interrupts must be initialized before any
  * peripherals are initialized
  */
-void hal_timer_interrupt_init(uint16_t delay_ms);
+void hal_timer_interrupt_init(uint32_t delay_ns);
 
 /* Checks to see if delay is done */
 uint8_t hal_timer_interrupt_check();
@@ -22,6 +21,6 @@ uint8_t hal_timer_interrupt_check();
 void hal_timer_interrupt_reset();
 
 /* Change delay timing initially set with hal_timer_interrupt_init() */
-void hal_timer_interrupt_change_delay(uint16_t delay_ms);
+void hal_timer_interrupt_change_delay(uint32_t delay_ns);
 
 #endif
