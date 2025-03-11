@@ -13,15 +13,15 @@ void gpio_init() {
   timer_interrupt_reset();  
   while(!timer_interrupt_check());
 
-  /* Set PB4-7 as inputs with pull-up (rows) */
+  /* Set PB12-15 as inputs with pull-up (rows) */
   /* Clear mode bits */
-  GPIOB_MODER &= ~(0xFF << 8);
+  GPIOB_MODER &= ~(0xFF << 24);
 
   /* Clear pullup bits first */
-  GPIOB_PUPDR &= ~(0xFF << 8);  
+  GPIOB_PUPDR &= ~(0xFF << 24);  
   
-  /* Set pullup for PB4-7 */
-  GPIOB_PUPDR |= (0x55 << 8);   
+  /* Set pullup for PB12-15 */
+  GPIOB_PUPDR |= (0x55 << 24);   
   
   /* Set PB0-3 as outputs (columns) */
   /* Clear bits 0-7 */
@@ -38,6 +38,7 @@ void read_write_buttons(volatile uint8_t *matrix_buttons) {
     GPIOB_ODR = ~(1 << i);  
 
     /* Wait for timer interrupt signal after setting ODR */
+    timer_interrupt_change_delay(6250);
     timer_interrupt_reset();
     while(!timer_interrupt_check());
 
@@ -49,7 +50,7 @@ void read_write_buttons(volatile uint8_t *matrix_buttons) {
      * State changes to 1 while button is held
      */
     for(int j = 0; j < 4; j++) {
-      if(!(rows & (1 << (j + 4)))) {
+      if(!(rows & (1 << (j + 12)))) {
         matrix_buttons[(j * 4) + i] = 1;
       } else {
         matrix_buttons[(j * 4) + i] = 0;

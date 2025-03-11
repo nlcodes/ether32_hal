@@ -3,6 +3,7 @@
 
 #include "../globals.h"
 
+/* GPIOB */
 #define GPIOB_MODER (*(volatile uint32_t *)(GPIOB_BASE + 0x00))
 #define GPIOB_PUPDR (*(volatile uint32_t *)(GPIOB_BASE + 0x0C))
 

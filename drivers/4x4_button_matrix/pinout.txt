@@ -1,0 +1,9 @@
+/* 4x4 button matrix to stm32 gpio map */
+c1 -> pb0
+c2 -> pb1
+c3 -> pb2
+c4 -> pb3
+r1 -> pb12
+r2 -> pb13
+r3 -> pb14
+r4 -> pb15
