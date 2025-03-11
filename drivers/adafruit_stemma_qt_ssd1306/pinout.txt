@@ -1,0 +1,7 @@
+/* adafruit_stemma_qt_ssd1306 128x64px to stm32 gpio map 
+ * Using stemma qt/qwiic to connect from screen
+ */
+yellow(sda) -> pb6
+blue(scl) -> pb7
+red(vcc) -> 3v3
+black(gnd) -> g
