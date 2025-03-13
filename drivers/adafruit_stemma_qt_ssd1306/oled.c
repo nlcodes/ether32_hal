@@ -145,7 +145,7 @@ void oled_init() {
   ssd1306_command(0x20);
 
   /* Horizontal addressing mode */
-  ssd1306_command(0x00);
+  ssd1306_command(0x02);
 
   /* Segment remap */
   ssd1306_command(0xA1);
@@ -191,15 +191,17 @@ void oled_init() {
 
 /* Write data to screen */
 void display_write(uint8_t *data, uint8_t page, uint8_t col, uint8_t width, uint8_t height) {
-  ssd1306_command(0xB0 + page);
-  ssd1306_command(0x00 | (col & 0x0F));
-  ssd1306_command(0x10 | (col << 4));
+  for(uint8_t i = 0; i < height; i++) {
 
-    for(uint8_t i = 0; i < width; i++) {
-    for(uint8_t j = 0; j < height; j++) {
+    /* Set page, col low and high */
+    ssd1306_command(0xB0 + page + i);
+    ssd1306_command(0x00 | (col & 0x0F));
+    ssd1306_command(0x10 | ((col >> 4) & 0x0F));
+
+    for(uint8_t j = 0; j < width; j++) {
 
       /* Control byte followed by data byte */
-      uint8_t data_packet[2] = {0x40, (uint8_t)data[i * height + j]};
+      uint8_t data_packet[2] = {0x40, (uint8_t)data[i * width + j]};
       i2c_write(0x3D, data_packet, 2);
 
       timer_interrupt_change_delay(4250);
