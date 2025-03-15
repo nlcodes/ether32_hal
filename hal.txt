@@ -86,7 +86,7 @@ OLED:
   Finally it takes width and height of the image as its last argument,
   so it can determine where the data is to stop being written
   Width value is in pixels while height is in oled pages
-    void hal_display_write(uint8_t *data, uint8_t page, uint8_t col, uint8_t width, uint8_t height);
+    void hal_display_write(uint8_t *data, uint8_t col, uint8_t page, uint8_t width, uint8_t height);
     
   Fills the whole screen with either white (0xFF) or black (0x00) pixels
     void hal_display_fill(uint8_t data);

@@ -6,6 +6,9 @@
  * Lower values may be not be effective
  */
 
+/* Display buffer for 128x64 oled */
+uint8_t display_buffer[1024] = {0};
+
 /* Init I2C */
 void i2c_init() {
 
@@ -190,7 +193,7 @@ void oled_init() {
 /* Main driver functions */
 
 /* Write data to screen */
-void display_write(uint8_t *data, uint8_t page, uint8_t col, uint8_t width, uint8_t height) {
+void display_write(uint8_t *data, uint8_t col, uint8_t page, uint8_t width, uint8_t height) {
   for(uint8_t i = 0; i < height; i++) {
 
     /* Set page, col low and high */
@@ -217,27 +220,102 @@ void display_fill(uint8_t pattern) {
   memset(buffer, pattern, sizeof(buffer));
 
   for(uint8_t page = 0; page < 8; page++) {
-    display_write(buffer, page, 0, 128, 1);
+    display_write(buffer, 0, page, 128, 1);
   }
 }
 
-/* Write any 128x64 bitmap xmb data */
+/* Write any 128x64 bitmap data */
 void display_write_bitmap(uint8_t *bitmap_data) {
+
   /* Call display_write with hardcoded values */
   display_write(bitmap_data, 0, 0, 128, 8);
+}
+
+
+/* Buffer functions */
+
+/* Init buffer */
+void buffer_init() {
+  memset(display_buffer, 0, sizeof(display_buffer));
+}
+
+/* Change a single pixel in the buffer to black or white */
+void buffer_set_pixel(uint8_t x, uint8_t y, uint8_t state) {
+
+  /* Find page */
+  uint8_t page = y / 8;
+
+  /* Find bit in byte */
+  uint8_t bit = y % 8;
+
+  /* Find buffer index */
+  uint16_t index = page * 128 + x;
+  
+  /* Set/clear the bit/pixel */
+  if(state) {
+    display_buffer[index] |= (1 << bit);
+  } else {
+    display_buffer[index] &= ~(1 << bit);
+  }
+}
+
+/* Write entire buffer to screen */
+void buffer_write() {
+  display_write(display_buffer, 0, 0, 128, 8);
+}
+
+/* Clear pixels from drawn data
+ * Useful if you want to remove drawn data 
+ * For example, during the movement of a sprite 
+ * one would clear the data, then draw sprite again 
+ * in new position 
+ * then draw the buffer
+ */
+void clear_binary_data(const uint8_t *data, uint8_t width, uint8_t height, uint8_t x, uint8_t y) {
+  for(uint8_t row = 0; row < height; row++) {
+    for(uint8_t col = 0; col < width; col++) {
+
+      /* Clear pixels that were set in original data */
+      if(data[row * width + col]) {
+        buffer_set_pixel(x + col, y + row, 0);
+      }
+    }
+  }
+}
+
+/* Draws data from a binary bitmap list 0,0,0,1 etc */
+void draw_binary_data(const uint8_t *data, uint8_t width, uint8_t height, uint8_t x, uint8_t y) {
+  for(uint8_t row = 0; row < height; row++) {
+    for(uint8_t col = 0; col < width; col++) {
+      
+      /* Get pixel from array */
+      uint8_t pixel = data[row * width + col];
+      
+      /* Set white pixels */
+      if(pixel) {
+        buffer_set_pixel(x + col, y + row, 1);
+      }
+    }
+  }
 }
 
 void display_init() {
 
   /* Delay to allow reliable startup */
-  timer_interrupt_change_delay(500000000);
+  timer_interrupt_change_delay(3000000000);
   timer_interrupt_reset();
   while(!timer_interrupt_check());
 
   i2c_init();
 
+  timer_interrupt_change_delay(3000000000);
+  timer_interrupt_reset();
+  while(!timer_interrupt_check());
+
   oled_init();
- 
+
+  buffer_init();
+
   /* Clear the display; turn off while clearing to avoid pixel flashing */
   ssd1306_command(0xAE);
   display_fill(0x00);
