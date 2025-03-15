@@ -95,6 +95,28 @@ OLED:
   Takes array of the data as an argument expecting hex values
     void hal_display_write_bitmap(uint8_t *bitmap_data);
 
+
+    Buffer Functions:
+      Functions pertaining to writing to display from a buffer 
+      instead of writing directly to display 
+      This can helps to ensure graphics update all at once instead of 
+      bit by bit throughout the program, giving a more natural feel
+
+      Sets a specific pixel at x/y location given state (1/0 (black/white))
+        void hal_buffer_set_pixel(uint8_t x, uint8_t y, uint8_t state);
+
+      Writes the entire 128x64 px buffer to the display 
+      Call this when you would like to refresh graphics after writing to 
+      the buffer array
+        void hal_buffer_write();
+
+        Binary Buffer Functions:
+          Writes a binary array of 1s and 0s to the the buffer
+            void hal_draw_binary_data(const uint8_t *data, uint8_t width, uint8_t height, uint8_t x, uint8_t y);
+          
+          Unwrites a binary array of 1s and 0s to the buffer (writes black over white px) 
+            void hal_clear_binary_data(const uint8_t *data, uint8_t width, uint8_t height, uint8_t x, uint8_t y);
+
 Button Matrix:
   Functions which cover initialization and reading button inputs
   from 4x4 button matrix using gpio
