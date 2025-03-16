@@ -269,7 +269,7 @@ void buffer_write() {
  * For example, during the movement of a sprite 
  * one would clear the data, then draw sprite again 
  * in new position 
- * then draw the buffer
+ * then write the buffer
  */
 void clear_binary_data(const uint8_t *data, uint8_t width, uint8_t height, uint8_t x, uint8_t y) {
   for(uint8_t row = 0; row < height; row++) {
@@ -294,6 +294,26 @@ void draw_binary_data(const uint8_t *data, uint8_t width, uint8_t height, uint8_
       /* Set white pixels */
       if(pixel) {
         buffer_set_pixel(x + col, y + row, 1);
+      }
+    }
+  }
+}
+
+/* Draws data from a binary bitmap list with 2x scaling (each bit == 2x2 pixels) */
+void draw_binary_data_scaled2x(const uint8_t *data, uint8_t width, uint8_t height, uint8_t x, uint8_t y) {
+  for(uint8_t row = 0; row < height; row++) {
+    for(uint8_t col = 0; col < width; col++) {
+      
+      /* Get pixel from array */
+      uint8_t pixel = data[row * width + col];
+      
+      /* Set 2x2 block of pixels if original pixel is set */
+      if(pixel) {
+        for(uint8_t scale_y = 0; scale_y < 2; scale_y++) {
+          for(uint8_t scale_x = 0; scale_x < 2; scale_x++) {
+            buffer_set_pixel(x + (col * 2) + scale_x, y + (row * 2) + scale_y, 1);
+          }
+        }
       }
     }
   }

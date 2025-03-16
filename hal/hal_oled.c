@@ -37,6 +37,10 @@ void hal_draw_binary_data(const uint8_t *data, uint8_t width, uint8_t height, ui
   draw_binary_data(data, width, height, x, y);
 }
 
+void hal_draw_binary_data_scaled2x(const uint8_t *data, uint8_t width, uint8_t height, uint8_t x, uint8_t y) {
+  draw_binary_data_scaled2x(data, width, height, x, y);
+}
+
 void hal_clear_binary_data(const uint8_t *data, uint8_t width, uint8_t height, uint8_t x, uint8_t y) {
   clear_binary_data(data, width, height, x, y);
 }

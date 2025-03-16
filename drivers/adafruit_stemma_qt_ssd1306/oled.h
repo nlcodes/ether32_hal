@@ -35,6 +35,7 @@ void buffer_write();
 
 /* Binary sprite drawing with buffer */
 void draw_binary_data(const uint8_t *data, uint8_t width, uint8_t height, uint8_t x, uint8_t y);
+void draw_binary_data_scaled2x(const uint8_t *data, uint8_t width, uint8_t height, uint8_t x, uint8_t y);
 void clear_binary_data(const uint8_t *data, uint8_t width, uint8_t height, uint8_t x, uint8_t y);
 
 #endif
