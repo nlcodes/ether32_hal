@@ -1,10 +1,25 @@
-stm32_hal
+ether32_hal
 
 About:
   A hal/drivers firmware library written in c 
   Designed and tested using stm32f411ce_8mflash blackpill microcontroller
   Drivers are written with modularity for
   programs using supported peripherals
+
+  Named ether32_hal because the design philosophy of this 
+  hardware abstraction layer aims to be like alchemical ether,
+  in that the hal underlies and makes up all core aspects of
+  the program it is used to build, and is as pure, minimal, 
+  and essential as possible
+  Only what is directly needed has been included in ether32 
+  It aims to be simple, bloat free, and is designed to be 
+  extensible and modifiable 
+  The supported peripherals are simply the ones which I wanted 
+  support for, as this library is primarily designed to be used in 
+  my projects
+  However, ether32_hal was designed with other users in mind
+  While it is an open source project, if you would like to license 
+  this library for commercial work please contact me (details below)
 
   Peripherals supported/tested include adafruit stemma qt 128x64 oled, 
   4x4 gpio button matrix, and stm32 blackpill test led
@@ -39,3 +54,16 @@ Instructions:
   stm32_hal c code compilation on linux
   For more documentation on the contents of make_utils read make.txt
   located at "stm32_hal/make.txt"
+
+LICENSE: 
+  ether32_hal is open source code and may be used in any non commercial 
+  projects, or looked over for education
+  If the library is used in something being distrubuted, credits
+  are required, and anyone using a modified version of this library in 
+  commercial works must obtain a commercial license 
+  This includes using the library in a modified form from a project 
+  using and distributing the library for free 
+  If you would like to use this library for free in non profit works, 
+  credits should include "ether32_hal by Nathan Lusk"
+  If you are interested in obtaining a commercial license, send inquiries to 
+  nlusk1234@gmail.com
