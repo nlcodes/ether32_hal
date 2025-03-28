@@ -1,7 +1,7 @@
 make_utils
 
 About:
-  Make/build utilities for stm32_hal library and supported peripherals
+  Make/build utilities for ether32_hal library and supported peripherals
   Desinged to provide a toolchain for building c projects on linux
   Includes a startup, linker, and Makefile
   Uses scheme lisp for a build script to automate the build process

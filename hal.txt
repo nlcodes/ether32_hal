@@ -1,13 +1,13 @@
 hal
 
 About:
-  This file serves as documentation for stm32_hal
+  This file serves as documentation for ether32_hal
   Specifically, this covers the functions contained in the hal,
   what they accomplish, and how to go about implementing them
 
 Instructions:
   Intrustions regarding how to use the hal are included in the master
-  directory of stm32_hal, in the readme.txt file located there
+  directory of ether32_hal, in the readme.txt file located there
 
 HAL Function Instructions and Explainations:
 

@@ -18,6 +18,8 @@ About:
   support for, as this library is primarily designed to be used in 
   my projects
   However, ether32_hal was designed with other users in mind
+  You are free to use this hal in 
+  non commercial projects (details below)
   While it is an open source project, if you would like to license 
   this library for commercial work please contact me (details below)
 
@@ -31,12 +33,12 @@ About:
   some minor adjustments required
 
 Instructions:
-  Place stm32_hal directory in master directory of 
+  Place ether32_hal directory in master directory of 
   stm32 firmware project using the hal
 
   Include the path of the main hal file (hal.h) in 
   program to access all hal functions
-  Path should be "stm32_hal/hal/hal.h"
+  Path should be "ether32_hal/hal/hal.h"
 
   For documentation regarding specific hal functions, their purpose, 
   and how to implement them in an stm32: Read hal.txt 
@@ -46,14 +48,14 @@ Instructions:
   This document covers essential initialization steps as well as 
   how to use the hal functions to manipulate your mcu and peripherals 
   from a higher level of abstraction, and is
-  located at "stm32_hal/hal.txt"
+  located at "ether32_hal/hal.txt"
 
   If you would like help building your project using the hal,
   move the contents of make_utils directory into project master directory
   The contents of make_utils are build tools for 
-  stm32_hal c code compilation on linux
+  ether32_hal c code compilation on linux
   For more documentation on the contents of make_utils read make.txt
-  located at "stm32_hal/make.txt"
+  located at "ether32_hal/make.txt"
 
 LICENSE: 
   ether32_hal is open source code and may be used in any non commercial 
@@ -63,7 +65,7 @@ LICENSE:
   commercial works must obtain a commercial license 
   This includes using the library in a modified form from a project 
   using and distributing the library for free 
-  If you would like to use this library for free in non profit works, 
+  If you would like to use this library for free in non commercial works, 
   credits should include "ether32_hal by Nathan Lusk"
   If you are interested in obtaining a commercial license, send inquiries to 
   nlusk1234@gmail.com

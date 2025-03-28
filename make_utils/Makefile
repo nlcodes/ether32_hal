@@ -3,7 +3,7 @@ CC = arm-none-eabi-gcc
 AS = arm-none-eabi-as
 
 # Compiler flags
-CFLAGS = -mcpu=cortex-m4 -mthumb -Os -Istm32_hal/hal
+CFLAGS = -mcpu=cortex-m4 -mthumb -Os -Iether32_hal/hal
 
 # Linker flags
 LDFLAGS = -Tlink.ld -nostartfiles
@@ -11,15 +11,15 @@ LDFLAGS = -Tlink.ld -nostartfiles
 # Source files
 SRCS = main.c \
        startup.s \
-       stm32_hal/hal/hal_interrupts.c \
-       stm32_hal/drivers/interrupts.c \
-       stm32_hal/hal/hal_oled.c \
-       stm32_hal/drivers/adafruit_stemma_qt_ssd1306/oled.c \
-       stm32_hal/hal/hal_buttons.c \
-       stm32_hal/drivers/4x4_button_matrix/buttons.c \
-       stm32_hal/hal/hal_status_led.c \
-       stm32_hal/drivers/led/led_on_off/led_on_off.c \
-       stm32_hal/drivers/led/led_blink/led_blink.c \
+       ether32_hal/hal/hal_interrupts.c \
+       ether32_hal/drivers/interrupts.c \
+       ether32_hal/hal/hal_oled.c \
+       ether32_hal/drivers/adafruit_stemma_qt_ssd1306/oled.c \
+       ether32_hal/hal/hal_buttons.c \
+       ether32_hal/drivers/4x4_button_matrix/buttons.c \
+       ether32_hal/hal/hal_status_led.c \
+       ether32_hal/drivers/led/led_on_off/led_on_off.c \
+       ether32_hal/drivers/led/led_blink/led_blink.c \
 
 # Object files (automatically generated from SRCS)
 OBJS = $(SRCS:.c=.o)

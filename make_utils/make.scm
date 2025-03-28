@@ -1,4 +1,4 @@
-; Build script for stm32_hal 
+; Build script for ether32_hal 
  
 (shell-command 
   "make clean && make && \

@@ -54,7 +54,9 @@
 .word SysTick_Handler  
 
 
-@ External interrupts; stm32f411
+@ stm32f411
+
+@ External interrupts
 
 @ 0: Window Watchdog
 .word WWDG_IRQHandler         
@@ -145,51 +147,54 @@
 
 .section .text
 
-@ Default handlers; all must be defined
+
+@ All must be defined
+
+@ Default handlers
 .thumb_func
 .weak NMI_Handler
 NMI_Handler:
-    b NMI_Handler
+  b NMI_Handler
 
 .thumb_func
 .weak HardFault_Handler
 HardFault_Handler:
-    b HardFault_Handler
+  b HardFault_Handler
 
 .thumb_func
 .weak MemManage_Handler
 MemManage_Handler:
-    b MemManage_Handler
+  b MemManage_Handler
 
 .thumb_func
 .weak BusFault_Handler
 BusFault_Handler:
-    b BusFault_Handler
+  b BusFault_Handler
 
 .thumb_func
 .weak UsageFault_Handler
 UsageFault_Handler:
-    b UsageFault_Handler
+  b UsageFault_Handler
 
 .thumb_func
 .weak SVC_Handler
 SVC_Handler:
-    bx lr
+  bx lr
 
 .thumb_func
 .weak DebugMon_Handler
 DebugMon_Handler:
-    bx lr
+  bx lr
 
 .thumb_func
 .weak PendSV_Handler
 PendSV_Handler:
-    bx lr
+  bx lr
 
 .thumb_func
 .weak SysTick_Handler
 SysTick_Handler:
-    bx lr
+  bx lr
 
 @ Define handler macro
 .macro def_irq_handler name
@@ -199,7 +204,7 @@ SysTick_Handler:
 
 .thumb_func
 Default_Handler:
-    b Default_Handler
+  b Default_Handler
 
 @ Generate all peripheral handlers as weak
 def_irq_handler WWDG_IRQHandler
